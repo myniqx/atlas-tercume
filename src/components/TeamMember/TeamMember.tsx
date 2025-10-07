@@ -1,10 +1,10 @@
 'use client';
 
 import React, { FC } from 'react';
-import { motion } from 'framer-motion';
 import { Mail, Linkedin, User } from 'lucide-react';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+import { CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { BaseCard } from '@/components/BaseCard';
 import { TeamMemberProps } from './types';
 import { cn } from '@/lib/utils';
 
@@ -19,14 +19,7 @@ export const TeamMember: FC<TeamMemberProps> = ({
   linkedin,
 }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -5 }}
-    >
-      <Card className={cn('overflow-hidden border-2 hover:border-primary/50 hover:shadow-premium transition-all duration-300', className)}>
+    <BaseCard hoverEffect="lift" animated className={cn('overflow-hidden', className)}>
         <CardHeader className="text-center pb-0">
           {/* Profile Image Placeholder */}
           <div className="relative w-32 h-32 mx-auto mb-4">
@@ -100,7 +93,6 @@ export const TeamMember: FC<TeamMemberProps> = ({
             </Button>
           )}
         </CardFooter>
-      </Card>
-    </motion.div>
+    </BaseCard>
   );
 };

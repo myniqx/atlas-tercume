@@ -1,9 +1,9 @@
 'use client';
 
 import React, { FC } from 'react';
-import { motion } from 'framer-motion';
 import { Star, Quote, User } from 'lucide-react';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+import { CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+import { BaseCard } from '@/components/BaseCard';
 import { TestimonialCardProps } from './types';
 import { cn } from '@/lib/utils';
 
@@ -19,13 +19,7 @@ export const TestimonialCard: FC<TestimonialCardProps> = ({
   date,
 }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-    >
-      <Card className={cn('h-full border-2 hover:border-primary/50 hover:shadow-premium transition-all duration-300', className)}>
+    <BaseCard hoverEffect="none" animated className={className}>
         <CardHeader>
           {/* Rating Stars */}
           <div className="flex items-center space-x-1 mb-4">
@@ -76,7 +70,6 @@ export const TestimonialCard: FC<TestimonialCardProps> = ({
             </div>
           </div>
         </CardFooter>
-      </Card>
-    </motion.div>
+    </BaseCard>
   );
 };

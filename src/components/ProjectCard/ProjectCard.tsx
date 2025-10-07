@@ -1,9 +1,9 @@
 'use client';
 
 import React, { FC } from 'react';
-import { motion } from 'framer-motion';
 import { Building2, FileText, Languages, Clock, TrendingUp } from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { BaseCard } from '@/components/BaseCard';
 import { ProjectCardProps } from './types';
 import { cn } from '@/lib/utils';
 
@@ -18,14 +18,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({
   logo,
 }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -5 }}
-    >
-      <Card className={cn('h-full border-2 hover:border-primary/50 hover:shadow-premium transition-all duration-300', className)}>
+    <BaseCard hoverEffect="lift" animated className={className}>
         <CardHeader>
           <div className="flex items-start justify-between mb-4">
             {/* Logo placeholder */}
@@ -99,7 +92,6 @@ export const ProjectCard: FC<ProjectCardProps> = ({
             <span>Başarıyla tamamlandı</span>
           </div>
         </CardFooter>
-      </Card>
-    </motion.div>
+    </BaseCard>
   );
 };
