@@ -122,30 +122,79 @@
 }
 
 @layer utilities {
-  /* Premium Gradients */
-  .gradient-primary {
-    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600;
-  }
+  /* ============================================
+     DYNAMIC THEME SYSTEM
+     Themes are controlled by ThemeSwitcher component
+     ============================================ */
 
-  .gradient-secondary {
-    @apply bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500;
+  /* Default / OPTION 1: Lacivert + Teal */
+  .gradient-primary {
+    @apply bg-slate-700 text-white;
   }
 
   .gradient-gold {
-    @apply bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500;
+    @apply bg-teal-600 text-white;
   }
 
-  .gradient-premium {
-    @apply bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600;
-  }
-
-  /* Text Gradients */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
+    @apply text-slate-700;
   }
 
   .text-gradient-gold {
-    @apply bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 bg-clip-text text-transparent;
+    @apply text-teal-600;
+  }
+
+  /* OPTION 2: Lacivert + Turuncu */
+  .theme-option2 .gradient-gold {
+    @apply bg-orange-500 text-white hover:bg-orange-600;
+  }
+
+  .theme-option2 .text-gradient-gold {
+    @apply text-orange-500;
+  }
+
+  /* OPTION 3: Lacivert + Yeşil */
+  .theme-option3 .gradient-gold {
+    @apply bg-emerald-600 text-white hover:bg-emerald-700;
+  }
+
+  .theme-option3 .text-gradient-gold {
+    @apply text-emerald-600;
+  }
+
+  /* OPTION 4: Gradient Teal-Cyan */
+  .theme-option4 .gradient-primary {
+    @apply bg-gradient-to-r from-slate-700 to-slate-800 text-white;
+  }
+
+  .theme-option4 .gradient-gold {
+    @apply bg-gradient-to-r from-teal-500 to-cyan-500 text-white hover:from-teal-600 hover:to-cyan-600;
+  }
+
+  .theme-option4 .text-gradient-primary {
+    @apply bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent;
+  }
+
+  .theme-option4 .text-gradient-gold {
+    @apply bg-gradient-to-r from-teal-500 to-cyan-500 bg-clip-text text-transparent;
+  }
+
+  /* OPTION 5: Lacivert + Amber */
+  .theme-option5 .gradient-gold {
+    @apply bg-amber-500 text-slate-900 hover:bg-amber-400 font-semibold;
+  }
+
+  .theme-option5 .text-gradient-gold {
+    @apply text-amber-500;
+  }
+
+  /* Secondary gradients - common across all themes */
+  .gradient-secondary {
+    @apply bg-slate-600 text-white;
+  }
+
+  .gradient-premium {
+    @apply bg-gradient-to-br from-slate-800 to-slate-900 text-white;
   }
 
   /* Glassmorphism */
@@ -157,13 +206,13 @@
     @apply bg-black/20 backdrop-blur-lg border border-white/10;
   }
 
-  /* Premium Shadows */
+  /* Soft Professional Shadows */
   .shadow-premium {
-    box-shadow: 0 20px 50px -12px rgba(139, 92, 246, 0.25);
+    box-shadow: 0 10px 40px -12px rgba(71, 85, 105, 0.2);
   }
 
   .shadow-glow {
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 30px rgba(71, 85, 105, 0.25);
   }
 
   /* Smooth Animations */

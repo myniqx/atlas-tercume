@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { siteMetadata } from "@/data/metadata";
 
 const geistSans = Geist({
@@ -49,6 +50,7 @@ export default function RootLayout({
         <main className="min-h-screen">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <ThemeSwitcher />
       </body>
     </html>
   );
