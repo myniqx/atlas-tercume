@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Atlas Lisan - Profesyonel Tercüme Hizmetleri
 
-## Getting Started
+Modern, lüks ve profesyonel bir tercüme bürosu web sitesi. Next.js 15, TypeScript, Tailwind CSS 4 ve Framer Motion ile geliştirilmiştir.
 
-First, run the development server:
+## 🚀 Özellikler
+
+- ✨ Modern ve premium tasarım
+- 🎨 Gradient'ler ve glassmorphism efektleri
+- 📱 Tam responsive tasarım
+- ⚡ Next.js 15 App Router
+- 🎭 Framer Motion animasyonları
+- 📧 Resend ile email entegrasyonu
+- 💬 WhatsApp entegrasyonu
+- 🎯 SEO optimizasyonu
+- 📊 13 farklı tercüme hizmeti
+- 🔒 Type-safe (TypeScript)
+
+## 🛠️ Teknoloji Stack
+
+- **Framework:** Next.js 15
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS 4
+- **UI:** shadcn/ui
+- **Icons:** Lucide React
+- **Animations:** Framer Motion
+- **Forms:** React Hook Form + Zod
+- **Email:** Resend
+- **Package Manager:** pnpm
+
+## 📦 Kurulum
+
+### 1. Dependencies'leri kur
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`.env.example` dosyasını `.env.local` olarak kopyalayın:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+Gerekli değerleri doldurun:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+RESEND_API_KEY=your_key
+CONTACT_EMAIL=info@atlaslisan.com
+NEXT_PUBLIC_WHATSAPP_NUMBER=+905551234567
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Development server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+Site `http://localhost:3000` adresinde çalışacaktır.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 İçerik Güncelleme
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tüm içerikler `src/data/` klasöründe MOCK data ile doldurulmuştur:
+
+- **İletişim:** `src/data/contact.ts`
+- **Hizmetler:** `src/data/services.ts`
+- **Ekip:** `src/data/team.ts`
+- **SEO:** `src/data/metadata.ts`
+
+## 🚀 Deploy
+
+```bash
+pnpm build
+pnpm start
+```
+
+Vercel'e otomatik deploy için GitHub'a push yapın.
+
+## 📄 Daha Fazla Bilgi
+
+Kod standartları için `CLAUDE.md` dosyasını inceleyin.
+
+---
+
+**Atlas Lisan** 🌐
