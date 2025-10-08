@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function ReferencesPage() {
   return (
-    <div className="py-16">
+    <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-16">
         <div className="container mx-auto px-4">

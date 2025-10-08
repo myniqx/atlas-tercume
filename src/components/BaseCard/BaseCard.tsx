@@ -52,20 +52,20 @@ export const BaseCard: FC<BaseCardProps> = ({
   // Initial animation config
   const animationConfig = animated
     ? {
-        initial: { opacity: 0, y: 20 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.5, delay: animationDelay },
-      }
+      initial: { opacity: 0, y: 20 },
+      whileInView: { opacity: 1, y: 0 },
+      viewport: { once: true },
+      transition: { duration: 0.5, delay: animationDelay },
+    }
     : {};
 
   // Hover animation config
   const hoverConfig =
     hoverEffect !== 'none'
       ? {
-          whileHover: getHoverAnimation(),
-          transition: { duration: 0.2 },
-        }
+        whileHover: getHoverAnimation(),
+        transition: { duration: 0.2 },
+      }
       : {};
 
   return (
@@ -82,7 +82,7 @@ export const BaseCard: FC<BaseCardProps> = ({
           className="pointer-events-none absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
           style={{
             background: isHovered
-              ? `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(var(--glow-color, 13, 148, 136), 0.2), transparent 40%)`
+              ? `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(var(--glow-color, 13, 148, 136), 0.4), transparent 40%)`
               : 'transparent',
             filter: 'blur(20px)',
           }}
@@ -93,7 +93,7 @@ export const BaseCard: FC<BaseCardProps> = ({
           className="pointer-events-none absolute -inset-px rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
           style={{
             background: isHovered
-              ? `radial-gradient(180px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(var(--glow-color, 13, 148, 136), 0.6), rgba(var(--glow-color, 13, 148, 136), 0.2) 40%, transparent 70%)`
+              ? `radial-gradient(180px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(var(--glow-color, 13, 148, 136), 0.6), rgba(var(--glow-color, 13, 148, 136), 0.5) 40%, transparent 70%)`
               : 'transparent',
           }}
         />

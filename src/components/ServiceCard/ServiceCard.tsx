@@ -83,7 +83,7 @@ export const ServiceCard: FC<ServiceCardProps> = ({
               </span>
             )}
           </div>
-          <CardDescription className="text-base">{description}</CardDescription>
+          <CardDescription className="text-base min-h-[90px]">{description}</CardDescription>
         </CardHeader>
         <CardContent>
           {features.length > 0 && (
