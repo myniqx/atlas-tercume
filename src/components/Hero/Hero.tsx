@@ -1,16 +1,16 @@
 'use client';
 
-import React, { FC, useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { useHeroAnimation } from '@/contexts/HeroAnimationContext';
 import { heroTranslations } from '@/data/heroTranslations';
+import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import type { HeroProps, Zone } from './types';
 import { useWordQueue } from './useWordQueue';
-import { measureText, calculateZones, createSpriteInZone } from './utils';
+import { calculateZones, createSpriteInZone, measureText } from './utils';
 
 export const Hero: FC<HeroProps> = ({
   className,

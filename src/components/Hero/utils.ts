@@ -89,7 +89,7 @@ export const createSpriteInZone = (
   delay: number = 0,
   animationSettings: AnimationSettings
 ): Sprite => {
-  const { fontSize, rotation, maxMovementDistance, debugLogs } = animationSettings;
+  const { fontSize, maxMovementDistance, debugLogs } = animationSettings;
 
   // 1. Measure text size (px)
   const textSize = measureText(text, fontSize.max);
@@ -133,7 +133,7 @@ export const createSpriteInZone = (
     fontSizeStart: fontSize.min + Math.random() * 0.5,
     fontSizeTop: fontSize.max - Math.random() * 0.5,
     fontSizeEnd: fontSize.min + Math.random() * 0.5,
-    rotation: rotation.min + Math.random() * (rotation.max - rotation.min),
+    rotation: 0, // No rotation
     duration: animationSettings.duration,
     delay,
     isActive: true,
