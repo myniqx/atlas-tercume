@@ -1,8 +1,8 @@
 'use client';
 
 import React, { FC, useState, useEffect } from 'react';
-import { Palette, Sun, Moon } from 'lucide-react';
-import { ThemeSwitcherProps, ColorTheme, AppearanceMode } from './types';
+import { Palette, Sun, Moon, Pipette } from 'lucide-react';
+import { ThemeSwitcherProps, ColorTheme, AppearanceMode, CustomColors } from './types';
 import { themeConfigs } from './data';
 import { cn } from '@/lib/utils';
 
@@ -10,15 +10,40 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<ColorTheme>('option1');
   const [appearanceMode, setAppearanceMode] = useState<AppearanceMode>('light');
+  const [customColors, setCustomColors] = useState<CustomColors>({
+    primaryRgb: '51, 65, 85',
+    ctaRgb: '13, 148, 136',
+    primaryHex: '#334155',
+    ctaHex: '#0d9488',
+  });
+
+  // Helper: Convert HEX to RGB
+  const hexToRgb = (hex: string): string => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (!result) return '0, 0, 0';
+    return `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`;
+  };
+
+  // Helper: Lighten color for dark mode
+  const lightenColor = (rgb: string, amount: number = 0.3): string => {
+    const [r, g, b] = rgb.split(',').map(val => parseInt(val.trim()));
+    const lightenValue = (v: number) => Math.min(255, Math.round(v + (255 - v) * amount));
+    return `${lightenValue(r)}, ${lightenValue(g)}, ${lightenValue(b)}`;
+  };
 
   // Load saved preferences from localStorage
   useEffect(() => {
     const savedTheme = localStorage.getItem('color-theme') as ColorTheme;
     const savedMode = localStorage.getItem('appearance-mode') as AppearanceMode;
+    const savedCustom = localStorage.getItem('custom-colors');
+
+    if (savedCustom) {
+      setCustomColors(JSON.parse(savedCustom));
+    }
 
     if (savedTheme) {
       setCurrentTheme(savedTheme);
-      applyTheme(savedTheme);
+      applyTheme(savedTheme, savedCustom ? JSON.parse(savedCustom) : customColors);
     }
 
     if (savedMode) {
@@ -27,14 +52,33 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
     }
   }, []);
 
-  const applyTheme = (themeId: ColorTheme) => {
+  // Apply theme colors to CSS variables
+  const applyTheme = (themeId: ColorTheme, colors?: CustomColors) => {
     const root = document.documentElement;
+    const theme = themeConfigs.find(t => t.id === themeId);
 
-    // Remove all theme classes
-    root.classList.remove('theme-option1', 'theme-option2', 'theme-option3', 'theme-option4', 'theme-option5');
+    if (!theme) return;
 
-    // Add new theme class
-    root.classList.add(`theme-${themeId}`);
+    let primaryRgb = theme.primaryRgb;
+    let ctaRgb = theme.ctaRgb;
+
+    // Use custom colors if custom theme
+    if (themeId === 'custom' && colors) {
+      primaryRgb = colors.primaryRgb;
+      ctaRgb = colors.ctaRgb;
+    }
+
+    // Apply colors (will be adjusted for dark mode in applyAppearanceMode)
+    root.style.setProperty('--theme-primary-rgb', primaryRgb);
+    root.style.setProperty('--theme-cta-rgb', ctaRgb);
+    root.style.setProperty('--glow-color', ctaRgb);
+
+    // Re-apply dark mode adjustment if in dark mode
+    if (appearanceMode === 'dark') {
+      root.style.setProperty('--theme-primary-rgb', lightenColor(primaryRgb, 0.2));
+      root.style.setProperty('--theme-cta-rgb', lightenColor(ctaRgb, 0.15));
+      root.style.setProperty('--glow-color', lightenColor(ctaRgb, 0.15));
+    }
   };
 
   const applyAppearanceMode = (mode: AppearanceMode) => {
@@ -42,15 +86,41 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
 
     if (mode === 'dark') {
       root.classList.add('dark');
+      // Lighten colors for dark mode
+      const theme = themeConfigs.find(t => t.id === currentTheme);
+      if (theme) {
+        const primaryRgb = currentTheme === 'custom' ? customColors.primaryRgb : theme.primaryRgb;
+        const ctaRgb = currentTheme === 'custom' ? customColors.ctaRgb : theme.ctaRgb;
+
+        root.style.setProperty('--theme-primary-rgb', lightenColor(primaryRgb, 0.2));
+        root.style.setProperty('--theme-cta-rgb', lightenColor(ctaRgb, 0.15));
+        root.style.setProperty('--glow-color', lightenColor(ctaRgb, 0.15));
+      }
     } else {
       root.classList.remove('dark');
+      // Restore original colors
+      applyTheme(currentTheme, customColors);
     }
   };
 
   const handleThemeChange = (themeId: ColorTheme) => {
     setCurrentTheme(themeId);
-    applyTheme(themeId);
+    applyTheme(themeId, themeId === 'custom' ? customColors : undefined);
     localStorage.setItem('color-theme', themeId);
+  };
+
+  const handleCustomColorChange = (type: 'primary' | 'cta', hex: string) => {
+    const newColors: CustomColors = {
+      ...customColors,
+      [`${type}Hex`]: hex,
+      [`${type}Rgb`]: hexToRgb(hex),
+    };
+    setCustomColors(newColors);
+    localStorage.setItem('custom-colors', JSON.stringify(newColors));
+
+    if (currentTheme === 'custom') {
+      applyTheme('custom', newColors);
+    }
   };
 
   const toggleAppearanceMode = () => {
@@ -62,7 +132,7 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
 
   // Only render in development
   if (process.env.NODE_ENV !== 'development') {
-    return null;
+    // return null; TODO: fix this after its production ready!
   }
 
   return (
@@ -131,38 +201,82 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
             </label>
             <div className="space-y-2">
               {themeConfigs.map((theme) => (
-                <button
-                  key={theme.id}
-                  onClick={() => handleThemeChange(theme.id)}
-                  className={cn(
-                    'w-full text-left px-3 py-2.5 rounded-lg border-2 transition-all',
-                    currentTheme === theme.id
-                      ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
-                      : 'border-slate-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-700 bg-white dark:bg-slate-700/50'
-                  )}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm font-semibold">{theme.name}</span>
-                    {currentTheme === theme.id && (
-                      <div className="w-2 h-2 rounded-full bg-purple-500" />
+                <div key={theme.id}>
+                  <button
+                    onClick={() => handleThemeChange(theme.id)}
+                    className={cn(
+                      'w-full text-left px-3 py-2.5 rounded-lg border-2 transition-all',
+                      currentTheme === theme.id
+                        ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20'
+                        : 'border-slate-200 dark:border-slate-700 hover:border-purple-300 dark:hover:border-purple-700 bg-white dark:bg-slate-700/50'
                     )}
-                  </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
-                    {theme.description}
-                  </p>
-                  <div className="flex gap-2">
-                    <div
-                      className="w-6 h-6 rounded border border-slate-300 dark:border-slate-600"
-                      style={{ backgroundColor: theme.primary }}
-                      title="Primary Color"
-                    />
-                    <div
-                      className="w-6 h-6 rounded border border-slate-300 dark:border-slate-600"
-                      style={{ backgroundColor: theme.cta }}
-                      title="CTA Color"
-                    />
-                  </div>
-                </button>
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm font-semibold">{theme.name}</span>
+                      {currentTheme === theme.id && (
+                        <div className="w-2 h-2 rounded-full bg-purple-500" />
+                      )}
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                      {theme.description}
+                    </p>
+                    <div className="flex gap-2">
+                      {!theme.isCustom ? (
+                        <>
+                          <div
+                            className="w-6 h-6 rounded border border-slate-300 dark:border-slate-600"
+                            style={{ backgroundColor: theme.primaryHex }}
+                            title="Primary Color"
+                          />
+                          <div
+                            className="w-6 h-6 rounded border border-slate-300 dark:border-slate-600"
+                            style={{ backgroundColor: theme.ctaHex }}
+                            title="CTA Color"
+                          />
+                        </>
+                      ) : (
+                        <div className="flex items-center gap-1 text-xs text-purple-600 dark:text-purple-400">
+                          <Pipette className="h-3 w-3" />
+                          <span>Pick your colors</span>
+                        </div>
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Custom Color Pickers */}
+                  {theme.isCustom && currentTheme === 'custom' && (
+                    <div className="mt-2 ml-3 space-y-2 pb-2 border-l-2 border-purple-300 dark:border-purple-700 pl-3">
+                      <div className="flex items-center gap-2">
+                        <label className="text-xs text-slate-600 dark:text-slate-400 w-16">
+                          Primary
+                        </label>
+                        <input
+                          type="color"
+                          value={customColors.primaryHex}
+                          onChange={(e) => handleCustomColorChange('primary', e.target.value)}
+                          className="w-8 h-8 rounded cursor-pointer border-2 border-slate-300 dark:border-slate-600"
+                        />
+                        <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+                          {customColors.primaryHex}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <label className="text-xs text-slate-600 dark:text-slate-400 w-16">
+                          CTA
+                        </label>
+                        <input
+                          type="color"
+                          value={customColors.ctaHex}
+                          onChange={(e) => handleCustomColorChange('cta', e.target.value)}
+                          className="w-8 h-8 rounded cursor-pointer border-2 border-slate-300 dark:border-slate-600"
+                        />
+                        <span className="text-xs font-mono text-slate-500 dark:text-slate-400">
+                          {customColors.ctaHex}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>

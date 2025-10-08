@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <div className="py-16">
+    <div>
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-16">
         <div className="container mx-auto px-4">
@@ -27,24 +27,37 @@ export default function ServicesPage() {
       </section>
 
       {/* Services by Category */}
-      {Object.entries(allServices).map(([categoryKey, category]) => (
-        <section key={categoryKey} className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">{category.category}</h2>
-              {category.description && (
-                <p className="text-lg text-muted-foreground">{category.description}</p>
-              )}
-            </div>
+      {Object.entries(allServices).map(([categoryKey, category]) => {
+        const serviceCount = Object.values(category.services).length;
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {Object.values(category.services).map((service) => (
-                <ServiceCard key={service.slug} {...service} variant="detailed" />
-              ))}
+        // Determine grid class based on service count
+        const gridClass = serviceCount === 3
+          ? "grid grid-cols-1 lg:grid-cols-3 gap-8"
+          : serviceCount === 4
+            ? "grid grid-cols-1 lg:grid-cols-4 gap-8"
+            : serviceCount === 2
+              ? "grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto"
+              : "grid grid-cols-1 lg:grid-cols-2 gap-8"; // fallback
+
+        return (
+          <section key={categoryKey} className="py-16">
+            <div className="container mx-auto px-4">
+              <div className="mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">{category.category}</h2>
+                {category.description && (
+                  <p className="text-lg text-muted-foreground">{category.description}</p>
+                )}
+              </div>
+
+              <div className={gridClass}>
+                {Object.values(category.services).map((service) => (
+                  <ServiceCard key={service.slug} {...service} variant="detailed" />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
 
       {/* CTA Section */}
       <section className="py-16 bg-muted/30">
