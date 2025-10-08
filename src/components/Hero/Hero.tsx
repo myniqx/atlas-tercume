@@ -5,57 +5,12 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { HeroProps } from './types';
 import { cn } from '@/lib/utils';
 import { useHeroAnimation } from '@/contexts/HeroAnimationContext';
 import { heroTranslations } from '@/data/heroTranslations';
-
-interface Zone {
-  id: number;
-  x: number;      // px
-  y: number;      // px
-  width: number;  // px
-  height: number; // px
-  sprite: Sprite | null;
-}
-
-interface Sprite {
-  id: string;
-  text: string;
-  zoneId: number;
-
-  // Position (px)
-  startX: number;
-  startY: number;
-  endX: number;
-  endY: number;
-
-  // Font
-  fontFamily: string;
-  fontSizeStart: number;
-  fontSizeTop: number;
-  fontSizeEnd: number;
-
-  // Animation
-  rotation: number;
-  duration: number;
-  delay: number;
-  isActive: boolean;
-}
-
-// Custom hook for word queue management
-const useWordQueue = (words: string[]) => {
-  const [queue] = useState<string[]>([...words].sort(() => Math.random() - 0.5));
-  const numberRef = useRef(0);
-
-  const takeWord = useCallback(() => {
-    const word = queue[numberRef.current];
-    numberRef.current = (numberRef.current + 1) % queue.length;
-    return word;
-  }, [queue, numberRef]);
-
-  return { takeWord, queueLength: queue.length };
-};
+import type { HeroProps, Zone } from './types';
+import { useWordQueue } from './useWordQueue';
+import { measureText, calculateZones, createSpriteInZone } from './utils';
 
 export const Hero: FC<HeroProps> = ({
   className,
@@ -96,136 +51,6 @@ export const Hero: FC<HeroProps> = ({
     [zones]
   );
 
-  // Helper: Measure text dimensions
-  const measureText = (text: string, fontSizeRem: number): { width: number; height: number } => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return { width: 0, height: 0 };
-
-    // Convert rem to px (assuming 16px base)
-    const fontSizePx = fontSizeRem * 16;
-    ctx.font = `bold ${fontSizePx}px sans-serif`;
-
-    const metrics = ctx.measureText(text);
-
-    return {
-      width: metrics.width,
-      height: fontSizePx, // Approximate height
-    };
-  };
-
-  // Calculate dynamic zones based on container size and base zone size (px)
-  const calculateZones = (width: number, height: number): Zone[] => {
-    const { debugLogs } = animationSettings;
-
-    if (!baseZoneSize.current) return [];
-
-    const { width: baseWidth, height: baseHeight } = baseZoneSize.current;
-
-    // Calculate grid with overflow (140% = -20% to 120%)
-    const overflowWidth = width * 1.4;
-    const overflowHeight = height * 1.4;
-
-    let cols = Math.floor(overflowWidth / baseWidth);
-    let rows = Math.floor(overflowHeight / baseHeight);
-
-    // Minimum 2x2 guarantee
-    cols = Math.max(2, cols);
-    rows = Math.max(2, rows);
-
-    const totalZones = cols * rows;
-
-    // Zone sizes in px
-    const zoneWidth = overflowWidth / cols;
-    const zoneHeight = overflowHeight / rows;
-
-    // Overflow offset (-20%)
-    const offsetX = -width * 0.2;
-    const offsetY = -height * 0.2;
-
-    if (debugLogs) {
-      console.log('[HERO] Zone grid calculated:', {
-        container: { width, height },
-        baseZone: baseZoneSize.current,
-        grid: { cols, rows },
-        totalZones,
-        zoneSize: { width: `${zoneWidth.toFixed(2)}px`, height: `${zoneHeight.toFixed(2)}px` }
-      });
-    }
-
-    // Create zones (px)
-    const newZones: Zone[] = [];
-    for (let i = 0; i < totalZones; i++) {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-
-      newZones.push({
-        id: i,
-        x: offsetX + col * zoneWidth,
-        y: offsetY + row * zoneHeight,
-        width: zoneWidth,
-        height: zoneHeight,
-        sprite: null,
-      });
-    }
-
-    return newZones;
-  };
-
-  // Create a sprite in available zone (px)
-  const createSpriteInZone = (text: string, zone: Zone, delay: number = 0): Sprite => {
-    const { fontSize, rotation, maxMovementDistance, debugLogs } = animationSettings;
-
-    // 1. Measure text size (px)
-    const textSize = measureText(text, fontSize.max);
-    const textWidthPx = textSize.width;
-    const textHeightPx = textSize.height;
-
-    // 2. Calculate free zone (px) - area where text can fit
-    const freeZoneWidth = zone.width - textWidthPx;
-    const freeZoneHeight = zone.height - textHeightPx;
-
-    // 3. Random start position (px) within free zone
-    const startX = zone.x + Math.random() * freeZoneWidth;
-    const startY = zone.y + Math.random() * freeZoneHeight;
-
-    let endX = zone.x + Math.random() * freeZoneWidth;
-    let endY = zone.y + Math.random() * freeZoneHeight;
-
-    const difX = Math.abs(endX - startX);
-    if (difX > maxMovementDistance) {
-      endX = startX > endX ? startX - maxMovementDistance : startX + maxMovementDistance;
-    } else if (difX < 10) {
-      endX = startX > endX ? startX - 10 : startX + 10;
-    }
-
-    const difY = Math.abs(endY - startY);
-    if (difY > maxMovementDistance) {
-      endY = startY > endY ? startY - maxMovementDistance : startY + maxMovementDistance;
-    } else if (difY < 10) {
-      endY = startY > endY ? startY - 10 : startY + 10;
-    }
-
-    const sprite: Sprite = {
-      id: `${text}-${Date.now()}-${zone.id}`,
-      text,
-      zoneId: zone.id,
-      startX,
-      startY,
-      endX,
-      endY,
-      fontFamily: 'inherit',
-      fontSizeStart: fontSize.min + Math.random() * 0.5,
-      fontSizeTop: fontSize.max - Math.random() * 0.5,
-      fontSizeEnd: fontSize.min + Math.random() * 0.5,
-      rotation: rotation.min + Math.random() * (rotation.max - rotation.min),
-      duration: animationSettings.duration,
-      delay,
-      isActive: true,
-    };
-    return sprite;
-  };
-
   // Level 1: Measure longest word (once on mount)
   useEffect(() => {
     const size = measureText("Atlas Lisan", animationSettings.fontSize.max);
@@ -259,7 +84,7 @@ export const Hero: FC<HeroProps> = ({
       if (!containerRef.current || !baseZoneSize.current) return;
 
       const { clientWidth, clientHeight } = containerRef.current;
-      const newZones = calculateZones(clientWidth, clientHeight);
+      const newZones = calculateZones(clientWidth, clientHeight, animationSettings, baseZoneSize.current);
       setZones(newZones);
     };
 
@@ -326,7 +151,7 @@ export const Hero: FC<HeroProps> = ({
 
               const word = takeWord();
               const zone = newZones[idx];
-              const newSprite = createSpriteInZone(word, zone, 0);
+              const newSprite = createSpriteInZone(word, zone, 0, animationSettings);
 
               newZones[idx] = {
                 ...zone,
@@ -374,7 +199,7 @@ export const Hero: FC<HeroProps> = ({
         const zone = newZones[i];
         const delay = i * 0.2; // 200ms stagger
         const word = takeWord();
-        const sprite = createSpriteInZone(word, zone, delay);
+        const sprite = createSpriteInZone(word, zone, delay, animationSettings);
 
         newZones[i] = {
           ...zone,
