@@ -45,6 +45,7 @@
 
 :root {
   --radius: 0.625rem;
+  --glow-color: 13, 148, 136; /* Teal RGB for radial gradient */
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
@@ -145,6 +146,10 @@
   }
 
   /* OPTION 2: Lacivert + Turuncu */
+  .theme-option2 {
+    --glow-color: 249, 115, 22; /* Orange RGB */
+  }
+
   .theme-option2 .gradient-gold {
     @apply bg-orange-500 text-white hover:bg-orange-600;
   }
@@ -154,6 +159,10 @@
   }
 
   /* OPTION 3: Lacivert + Yeşil */
+  .theme-option3 {
+    --glow-color: 5, 150, 105; /* Emerald RGB */
+  }
+
   .theme-option3 .gradient-gold {
     @apply bg-emerald-600 text-white hover:bg-emerald-700;
   }
@@ -163,6 +172,10 @@
   }
 
   /* OPTION 4: Gradient Teal-Cyan */
+  .theme-option4 {
+    --glow-color: 20, 184, 166; /* Teal RGB */
+  }
+
   .theme-option4 .gradient-primary {
     @apply bg-gradient-to-r from-slate-700 to-slate-800 text-white;
   }
@@ -180,6 +193,10 @@
   }
 
   /* OPTION 5: Lacivert + Amber */
+  .theme-option5 {
+    --glow-color: 245, 158, 11; /* Amber RGB */
+  }
+
   .theme-option5 .gradient-gold {
     @apply bg-amber-500 text-slate-900 hover:bg-amber-400 font-semibold;
   }
