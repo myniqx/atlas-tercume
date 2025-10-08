@@ -8,10 +8,12 @@ import { Button } from '@/components/ui/button';
 import { HeaderProps } from './types';
 import { mainNavigation } from '@/data/navigation';
 import { cn } from '@/lib/utils';
+import { useHeroAnimation } from '@/contexts/HeroAnimationContext';
 
 export const Header: FC<HeaderProps> = ({ className }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { setHoveredNavItem } = useHeroAnimation();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -19,6 +21,14 @@ export const Header: FC<HeaderProps> = ({ className }) => {
 
   const isActivePath = (href: string) => {
     return pathname === href;
+  };
+
+  const handleNavHover = (href: string) => {
+    setHoveredNavItem(href);
+  };
+
+  const handleNavLeave = () => {
+    setHoveredNavItem(null);
   };
 
   return (
@@ -46,6 +56,8 @@ export const Header: FC<HeaderProps> = ({ className }) => {
               <Link
                 key={item.href}
                 href={item.href}
+                onMouseEnter={() => handleNavHover(item.href)}
+                onMouseLeave={handleNavLeave}
                 className={cn(
                   'px-4 py-2 rounded-lg text-sm font-medium transition-colors relative',
                   isActivePath(item.href)

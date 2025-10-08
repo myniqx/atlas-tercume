@@ -16,10 +16,6 @@ export interface AnimationSettings {
 
   // Animation
   duration: number;         // 2-8 seconds
-  rotation: {
-    min: number;            // degrees
-    max: number;            // degrees
-  };
   maxMovementDistance: number;  // Max distance in zone (px)
 
   // Zone & Sprite System
@@ -42,20 +38,16 @@ interface HeroAnimationContextType {
 
 const defaultSettings: AnimationSettings = {
   opacity: 0.15,
-  blur: 1,
-  blurStart: 8,
+  blur: 3,
+  blurStart: 15,
   fontSize: {
-    min: 2,
-    max: 5,
+    min: 2.5,
+    max: 3,
   },
-  duration: 3,
-  rotation: {
-    min: -10,
-    max: 10,
-  },
-  maxMovementDistance: 100,
-  maxConcurrentSprites: 12,
-  spriteDelay: 500,
+  duration: 2.5,
+  maxMovementDistance: 30,
+  maxConcurrentSprites: 10,
+  spriteDelay: 200,
   enabled: true,
   debugMode: false,
   debugLogs: false,

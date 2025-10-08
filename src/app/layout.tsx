@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { siteMetadata } from "@/data/metadata";
+import { HeroAnimationProvider } from "@/contexts/HeroAnimationContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,11 +47,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <WhatsAppButton />
-        <ThemeSwitcher />
+        <HeroAnimationProvider>
+          <Header />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <WhatsAppButton />
+          <ThemeSwitcher />
+        </HeroAnimationProvider>
       </body>
     </html>
   );
