@@ -1,4 +1,3 @@
-import React from 'react';
 import { z } from 'zod';
 
 export interface ContactFormProps {

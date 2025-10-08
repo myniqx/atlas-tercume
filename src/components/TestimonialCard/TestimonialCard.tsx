@@ -16,7 +16,6 @@ export const TestimonialCard: FC<TestimonialCardProps> = ({
   rating,
   image,
   serviceUsed,
-  date,
 }) => {
   return (
     <BaseCard hoverEffect="none" animated className={className}>
@@ -38,7 +37,7 @@ export const TestimonialCard: FC<TestimonialCardProps> = ({
           <div className="relative">
             <Quote className="h-10 w-10 text-primary/20 absolute -top-2 -left-2" />
             <p className="text-muted-foreground relative z-10 pl-6">
-              "{content}"
+              &quot;{content}&quot;
             </p>
           </div>
         </CardHeader>

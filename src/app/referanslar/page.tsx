@@ -109,7 +109,7 @@ export default function ReferencesPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {industries.map((industry, index) => {
-              const IconComponent = (LucideIcons as any)[industry.icon] || LucideIcons.Building2;
+              const IconComponent = (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[industry.icon] || LucideIcons.Building2;
               return (
                 <div
                   key={index}

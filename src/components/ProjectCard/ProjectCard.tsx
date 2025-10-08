@@ -5,7 +5,6 @@ import { Building2, FileText, Languages, Clock, TrendingUp } from 'lucide-react'
 import { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { BaseCard } from '@/components/BaseCard';
 import { ProjectCardProps } from './types';
-import { cn } from '@/lib/utils';
 
 export const ProjectCard: FC<ProjectCardProps> = ({
   className,

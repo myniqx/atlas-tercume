@@ -36,7 +36,7 @@ export default function AboutPage() {
             </h2>
             <div className="prose prose-lg max-w-none text-muted-foreground space-y-4">
               <p>
-                Atlas Lisan, 2010 yılında İstanbul'da kurulmuş, profesyonel tercüme hizmetleri alanında
+                Atlas Lisan, 2010 yılında İstanbul&apos;da kurulmuş, profesyonel tercüme hizmetleri alanında
                 uzmanlaşmış bir tercüme bürosudur. Kuruluşumuzdan bu yana, binlerce müşteriye hizmet
                 vererek güvenilir ve kaliteli çeviri çözümleri sunmaktayız.
               </p>
