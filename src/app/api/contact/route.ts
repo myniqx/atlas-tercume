@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { z } from 'zod';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key_for_build');
 
 // Validation schema
 const contactSchema = z.object({
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Geçersiz form verileri', details: error.errors },
+        { error: 'Geçersiz form verileri', details: error.issues },
         { status: 400 }
       );
     }

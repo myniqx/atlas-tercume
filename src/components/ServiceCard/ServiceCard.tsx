@@ -22,7 +22,7 @@ export const ServiceCard: FC<ServiceCardProps> = ({
   variant = 'compact',
 }) => {
   // Dynamically get Lucide icon
-  const IconComponent = (LucideIcons as Record<string, React.ComponentType<{ className?: string }>>)[icon] || LucideIcons.HelpCircle;
+  const IconComponent = (LucideIcons as unknown as Record<string, React.ComponentType<{ className?: string }>>)[icon] || LucideIcons.HelpCircle;
 
   if (variant === 'compact') {
     return (
