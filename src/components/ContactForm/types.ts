@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 export interface ContactFormProps {
   className?: string;
-  initialSubject?: string;
 }
 
 export const contactFormSchema = z.object({

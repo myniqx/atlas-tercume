@@ -3,6 +3,7 @@
 import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'next/navigation';
 import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,7 +13,10 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { ContactFormProps, contactFormSchema, ContactFormData } from './types';
 import { cn } from '@/lib/utils';
 
-export const ContactForm: FC<ContactFormProps> = ({ className, initialSubject }) => {
+export const ContactForm: FC<ContactFormProps> = ({ className }) => {
+  const searchParams = useSearchParams();
+  const subject = searchParams.get('subject');
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -25,7 +29,7 @@ export const ContactForm: FC<ContactFormProps> = ({ className, initialSubject })
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      subject: initialSubject || '',
+      subject: subject || '',
     },
   });
 
@@ -49,7 +53,7 @@ export const ContactForm: FC<ContactFormProps> = ({ className, initialSubject })
 
       setSubmitStatus('success');
       reset({
-        subject: initialSubject || '',
+        subject: subject || '',
       });
 
       // Reset success message after 5 seconds
