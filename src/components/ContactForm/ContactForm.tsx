@@ -12,7 +12,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { ContactFormProps, contactFormSchema, ContactFormData } from './types';
 import { cn } from '@/lib/utils';
 
-export const ContactForm: FC<ContactFormProps> = ({ className }) => {
+export const ContactForm: FC<ContactFormProps> = ({ className, initialSubject }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -24,6 +24,9 @@ export const ContactForm: FC<ContactFormProps> = ({ className }) => {
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      subject: initialSubject || '',
+    },
   });
 
   const onSubmit = async (data: ContactFormData) => {
@@ -45,7 +48,9 @@ export const ContactForm: FC<ContactFormProps> = ({ className }) => {
       }
 
       setSubmitStatus('success');
-      reset();
+      reset({
+        subject: initialSubject || '',
+      });
 
       // Reset success message after 5 seconds
       setTimeout(() => {

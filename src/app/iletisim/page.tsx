@@ -1,17 +1,15 @@
+'use client';
+
 import React from 'react';
-import type { Metadata } from 'next';
+import { useSearchParams } from 'next/navigation';
 import { ContactForm } from '@/components/ContactForm';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
 import { contactData } from '@/data/contact';
-import { pageMetadata } from '@/data/metadata';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: pageMetadata.contact.title,
-  description: pageMetadata.contact.description,
-};
-
 export default function ContactPage() {
+  const searchParams = useSearchParams();
+  const subject = searchParams.get('subject');
   return (
     <div>
       {/* Hero Section */}
@@ -34,7 +32,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* Contact Form */}
             <div>
-              <ContactForm />
+              <ContactForm initialSubject={subject || undefined} />
             </div>
 
             {/* Contact Info */}

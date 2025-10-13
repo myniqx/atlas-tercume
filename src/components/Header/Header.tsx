@@ -7,6 +7,7 @@ import { Menu, X, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HeaderProps } from './types';
 import { mainNavigation } from '@/data/navigation';
+import { contactData } from '@/data/contact';
 import { cn } from '@/lib/utils';
 import { useHeroAnimation } from '@/contexts/HeroAnimationContext';
 
@@ -43,7 +44,16 @@ export const Header: FC<HeaderProps> = ({ className }) => {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
             <div className="flex items-center justify-center w-10 h-10 rounded-lg gradient-primary group-hover:shadow-glow transition-all duration-300">
-              <Globe className="h-6 w-6 text-white" />
+              {contactData.logo ? (
+                <img
+                  src={contactData.logo}
+                  alt="Logo"
+                  className="w-full h-full bg-white"
+                />
+              ) : (
+                <Globe className="h-6 w-6 text-white" />
+              )}
+
             </div>
             <span className="text-xl font-bold text-gradient-primary">
               Atlas Lisan

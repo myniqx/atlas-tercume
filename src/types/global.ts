@@ -41,6 +41,7 @@ export interface ContactInfo {
   whatsapp: string;
   address: string;
   workingHours: string;
+  logo: string;
   social: {
     linkedin?: string;
     instagram?: string;

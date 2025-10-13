@@ -6,8 +6,10 @@ import * as LucideIcons from 'lucide-react';
 import { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BaseCard } from '@/components/BaseCard';
+import { SharePopup } from '@/components/SharePopup';
 import { ServiceCardProps } from './types';
 import { cn } from '@/lib/utils';
+import { siteMetadata } from '@/data/metadata';
 
 export const ServiceCard: FC<ServiceCardProps> = ({
   className,
@@ -116,14 +118,16 @@ export const ServiceCard: FC<ServiceCardProps> = ({
           )}
         </CardContent>
         <CardFooter className="flex gap-3">
-          <Link href="/iletisim" className="flex-1">
+          <Link href={`/iletisim?subject=${encodeURIComponent(title)}`} className="flex-1">
             <Button className="w-full gradient-primary text-white">
               Teklif Al
             </Button>
           </Link>
-          <Button variant="outline" size="icon">
-            <LucideIcons.Share2 className="h-4 w-4" />
-          </Button>
+          <SharePopup
+            title={title}
+            description={description}
+            url={`${siteMetadata.siteUrl}/hizmetlerimiz#${slug}`}
+          />
         </CardFooter>
       </BaseCard>
     </div>

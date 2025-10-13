@@ -1,3 +1,4 @@
+import { contactData } from '@/data/contact';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { z } from 'zod';
@@ -22,8 +23,8 @@ export async function POST(request: NextRequest) {
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: 'Atlas Lisan <onboarding@resend.dev>', // Replace with your verified domain
-      to: [process.env.CONTACT_EMAIL || 'info@atlaslisan.com'],
+      from: 'Atlas Lisan <sandbox@resend.dev>',
+      to: contactData.email,
       subject: `Yeni İletişim Formu: ${validatedData.subject}`,
       html: `
         <!DOCTYPE html>

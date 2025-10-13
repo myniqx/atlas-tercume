@@ -135,7 +135,7 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
 
   // Only render in development
   if (process.env.NODE_ENV !== 'development') {
-    // return null; TODO: fix this after its production ready!
+    return null;
   }
 
   return (
