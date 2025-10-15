@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     // Send email using Resend
     const { data, error } = await resend.emails.send({
       from: 'Atlas Lisan <sandbox@resend.dev>',
-      to: contactData.email,
+      to: 'atlasakademik@gmail.com', // contactData.email,
       subject: `Yeni İletişim Formu: ${validatedData.subject}`,
       html: `
         <!DOCTYPE html>

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const showCrew = false
   return (
     <div>
       {/* Hero Section */}
@@ -109,7 +110,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section id="ekip" className="py-16">
+      {showCrew && <section id="ekip" className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -126,7 +127,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Stats Section */}
       <section className="py-16 bg-gradient-to-br from-primary/10 via-purple-500/10 to-pink-500/10">

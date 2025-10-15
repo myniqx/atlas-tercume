@@ -113,7 +113,7 @@ export const ContactForm: FC<ContactFormProps> = ({ className }) => {
 
           {/* Phone */}
           <div className="space-y-2">
-            <Label htmlFor="phone">Telefon (Opsiyonel)</Label>
+            <Label htmlFor="phone">Telefon</Label>
             <Input
               id="phone"
               type="tel"
