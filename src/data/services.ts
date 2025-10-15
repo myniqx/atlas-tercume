@@ -16,7 +16,7 @@ export const mainServices: Record<string, Service> = {
     ],
     turnaroundTime: '2-3 iş günü',
     price: {
-      min: 0.15,
+      min: 1.50,
       unit: 'kelime',
     },
   },
@@ -34,7 +34,7 @@ export const mainServices: Record<string, Service> = {
     ],
     turnaroundTime: '1-2 iş günü',
     price: {
-      min: 50,
+      min: 550,
       unit: 'sayfa',
     },
   },
@@ -52,7 +52,7 @@ export const mainServices: Record<string, Service> = {
     ],
     turnaroundTime: '4-24 saat',
     price: {
-      min: 0.25,
+      min: 1.99,
       unit: 'kelime',
     },
   },
@@ -69,7 +69,7 @@ export const mainServices: Record<string, Service> = {
     ],
     turnaroundTime: '3-5 iş günü',
     price: {
-      min: 0.20,
+      min: 1.99,
       unit: 'kelime',
     },
   },
@@ -96,7 +96,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '1-2 iş günü',
         price: {
-          min: 50,
+          min: 600,
           unit: 'sayfa',
         },
       },
@@ -110,11 +110,10 @@ export const allServices: Record<string, ServiceCategory> = {
           'Apostil işlemleri',
           'Konsolosluk onayı',
           'Express işlem seçeneği',
-          'Tüm noter işlemleri dahil',
         ],
         turnaroundTime: '1-2 iş günü',
         price: {
-          min: 60,
+          min: 599,
           unit: 'sayfa',
         },
       },
@@ -132,7 +131,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '3-5 iş günü',
         price: {
-          min: 0.22,
+          min: 2.30,
           unit: 'kelime',
         },
       },
@@ -157,7 +156,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '3-5 iş günü',
         price: {
-          min: 0.20,
+          min: 2.00,
           unit: 'kelime',
         },
       },
@@ -175,7 +174,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '3-5 iş günü',
         price: {
-          min: 0.25,
+          min: 2.49,
           unit: 'kelime',
         },
       },
@@ -193,7 +192,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '2-4 iş günü',
         price: {
-          min: 0.22,
+          min: 2.45,
           unit: 'kelime',
         },
       },
@@ -211,7 +210,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '5-7 iş günü',
         price: {
-          min: 0.18,
+          min: 1.91,
           unit: 'kelime',
         },
       },
@@ -236,7 +235,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '3-7 iş günü',
         price: {
-          min: 0.18,
+          min: 2.18,
           unit: 'kelime',
         },
       },
@@ -254,7 +253,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '2-4 iş günü',
         price: {
-          min: 0.30,
+          min: 1.90,
           unit: 'kelime',
         },
       },
@@ -298,7 +297,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '4-24 saat',
         price: {
-          min: 0.25,
+          min: 2.25,
           unit: 'kelime',
         },
       },
@@ -317,7 +316,7 @@ export const allServices: Record<string, ServiceCategory> = {
         ],
         turnaroundTime: '4-8 saat',
         price: {
-          min: 100,
+          min: 900,
           unit: 'sayfa',
         },
       },
