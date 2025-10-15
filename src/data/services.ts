@@ -257,24 +257,6 @@ export const allServices: Record<string, ServiceCategory> = {
           unit: 'kelime',
         },
       },
-      altyaziTranskripsiyon: {
-        title: 'Altyazı & Transkripsiyon',
-        slug: 'altyazi-transkripsiyon',
-        description: 'Video içerikler için altyazı çevirisi ve ses kayıtlarının yazıya dökümü hizmetleri. YouTube, e-öğrenme ve kurumsal videolar için.',
-        icon: 'Subtitles',
-        features: [
-          'Video altyazı çevirisi (SRT, VTT)',
-          'Ses kayıtlarının transkripsiyon',
-          'Timing ve senkronizasyon',
-          'YouTube ve Vimeo format desteği',
-          'Kurumsal eğitim videoları',
-        ],
-        turnaroundTime: '2-5 iş günü',
-        price: {
-          min: 5,
-          unit: 'saat',
-        },
-      },
     },
   },
 

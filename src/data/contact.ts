@@ -8,7 +8,7 @@ export const contactData: ContactInfo = {
   workingHours: 'Pazartesi - Cuma: 09:00 - 18:00',
   logo: '/logo.png',
   social: {
-    linkedin: 'https://linkedin.com/company/atlaslisan',
+    linkedin: 'https://www.linkedin.com/in/atlas-lisan-2b06b438a/',
     instagram: 'https://instagram.com/atlaslisan',
     twitter: 'https://twitter.com/atlasLisan',
     facebook: 'https://facebook.com/atlaslisan',

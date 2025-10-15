@@ -89,7 +89,7 @@ export const ServiceCard: FC<ServiceCardProps> = ({
         </CardHeader>
         <CardContent>
           {features.length > 0 && (
-            <div className="space-y-3">
+            <div className="space-y-3 min-h-[175px]">
               <h4 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
                 Özellikler
               </h4>
